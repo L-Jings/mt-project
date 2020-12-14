@@ -14,6 +14,10 @@ const routes = [
       path: '/index',
       name: 'index',
       component: () => import('@/views/page/index.vue')
+    }, {
+      path: '/changeCity',
+      name: 'changeCity',
+      component: () => import('@/views/page/changeCity.vue')
     }]
   },
   {
