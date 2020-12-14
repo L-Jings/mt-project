@@ -11,6 +11,10 @@ const routes = [
     redirect: '/index',
     component: defaultPage,
     children: [{
+      path: 's/:name',
+      name: 'goods',
+      component: () => import('@/views/page/goodsList.vue')
+    }, {
       path: '/index',
       name: 'index',
       component: () => import('@/views/page/index.vue')
