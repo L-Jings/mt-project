@@ -32,10 +32,10 @@ var api = {
     return axios.get('/api/meituan/city/cityList.json')
   },
   login (params) {
-    return axios.get('/api/meituan/login', params)
+    return axios.get('/api/meituan/login', { params })
   },
   register (params) {
-    return axios.get('/api/meituan/register', params)
+    return axios.get('/api/meituan/register', { params })
   }
 }
 

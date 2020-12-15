@@ -27,7 +27,16 @@ const routes = [
   {
     path: '/blank',
     name: 'blank',
-    component: blankPage
+    component: blankPage,
+    children: [{
+      path: 'login',
+      name: 'login',
+      component: () => import('@/views/page/login.vue')
+    }, {
+      path: 'register',
+      name: 'register',
+      component: () => import('@/views/page/register.vue')
+    }]
   }
 ]
 
