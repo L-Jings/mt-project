@@ -16,12 +16,18 @@
     </div>
 </template>
 <script>
+import api from '@/api/index.js'
 export default {
   data () {
     return {
       curDetail: null,
       menuList: []
     }
+  },
+  created () {
+    api.getMenuList().then((res) => {
+      this.menuList = res.data.data
+    })
   },
   methods: {
     menuEnter (item) { // 鼠标移入标签事件

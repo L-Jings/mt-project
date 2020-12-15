@@ -14,6 +14,7 @@
             placeholder="搜索商家地点"
             @focus="focusInput"
             @blur="blurInput"
+            @input="input"
           ></el-input>
           <el-button type="primary" icon="el-icon-search"></el-button>
           <dl class="hotPlace" v-if="isHotPlace">
@@ -33,10 +34,9 @@
           </dl>
         </div>
         <p class="suggest">
-          <a href="#">jddddddd</a>
-          <a href="#">ssssss</a>
-          <a href="#">dasdsadas</a>
-          <a href="#">sadasdas</a>
+          <router-link v-for="(item,index) in suggestList" :key="item + '~' + index"
+            :to="{name:'goods',params:{name:item}}"
+          >{{item}}</router-link>
         </p>
       </el-col>
     </el-row>
@@ -44,14 +44,22 @@
 </template>
 
 <script>
+import api from '@/api/index.js'
 export default {
   data () {
     return {
       searchWord: '',
       isFocus: false,
-      hotPlaceList: ['xxxx', 'xxxxx', 'sssss'],
-      searchList: ['qqqq', 'wwww']
+      hotPlaceList: [],
+      suggestList: [],
+      searchList: []
     }
+  },
+  created () {
+    api.searchHotWords().then((res) => {
+      this.hotPlaceList = res.data.data
+      this.suggestList = res.data.data
+    })
   },
   computed: {
     isHotPlace () {
@@ -69,6 +77,12 @@ export default {
       setTimeout(() => {
         this.isFocus = false
       }, 200)
+    },
+    input () {
+      const val = this.searchWord
+      api.getSearchList().then((res) => {
+        this.searchList = res.data.data.list.filter((item) => item.indexOf(val) > -1)
+      })
     }
   }
 }

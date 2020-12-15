@@ -12,18 +12,18 @@
       </dd>
     </dl>
     <ul class="ibody">
-      <li>
+      <li v-for="(item,index) in resultsData[kind]" :key="index">
         <el-card :body-style="{padding:'0px'}" shadow="never">
-          <img src="" alt="" class="image">
+          <img :src="item.image" alt="图片" class="image">
           <div class="cbody">
-              <div class="title"></div>
-              <div class="sub-title"></div>
+              <div class="title" :title="item.title">{{item.title}}</div>
+              <div class="sub-title" :title="item.subTitle">{{item.subTitle}}</div>
               <div class="price-info">
                   <span class="current-price-wrapper">
                       <span class="price-symbol numfont">¥</span>
-                      <span class="current-price numfont"></span>
+                      <span class="current-price numfont">{{item.price}}</span>
                   </span>
-                  <span class="sold bottom-right-info"></span>
+                  <span class="sold bottom-right-info">{{item.address}}</span>
               </div>
           </div>
         </el-card>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import api from '@/api/index.js'
 export default {
   data () {
     return {
@@ -41,6 +42,11 @@ export default {
     }
   },
   props: ['nav'],
+  created () {
+    api.resultsByKeywords().then((res) => {
+      this.resultsData = res.data.data
+    })
+  },
   methods: {
     over (e) {
       const dom = e.target // 获取移入时候dom元素
